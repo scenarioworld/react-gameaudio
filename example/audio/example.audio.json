@@ -1,0 +1,8 @@
+{
+    "$schema": "../gameaudio.json",
+
+    "music": {
+        "song": { "file": "song.mp3" },
+        "musicbox": { "file": "musicbox.mp3" }
+    }
+}

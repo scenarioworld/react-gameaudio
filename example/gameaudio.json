@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+
+    "definitions": {
+        "audioSet": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "properties": {
+                    "file": { "type": "string" },
+                    "priority": { "type": "number" }
+                },
+                "required": ["file"]
+            }
+        }
+    },
+
+    "type": "object",
+    "properties": {
+        "music": { "$ref": "#/definitions/audioSet" },
+        "sfx": { "$ref": "#/definitions/audioSet" }
+    }
+}
