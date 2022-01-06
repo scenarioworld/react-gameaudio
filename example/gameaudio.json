@@ -12,12 +12,49 @@
                 },
                 "required": ["file"]
             }
+        },
+        "event": {
+            "anyOf": [
+                { 
+                    "type": "object",
+                    "maxProperties": 1,
+                    "additionalProperties": false,
+                    "properties": {
+                        "shuffle": { 
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/event" }
+                        },
+                        "select": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/definitions/event"
+                            }
+                        }
+                    }
+                },
+                { 
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/event"
+                    }
+                }
+            ]
+        },
+        "eventSet": { 
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/event"
+            }
         }
     },
 
     "type": "object",
     "properties": {
         "music": { "$ref": "#/definitions/audioSet" },
-        "sfx": { "$ref": "#/definitions/audioSet" }
+        "sfx": { "$ref": "#/definitions/audioSet" },
+        "events": { "$ref": "#/definitions/eventSet" }
     }
 }

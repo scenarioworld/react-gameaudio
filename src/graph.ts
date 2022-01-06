@@ -127,6 +127,7 @@ export class AudioGraph {
     // Load audio buffer for this track
     const buffer = await this.getBuffer(id, true);
     if (!buffer) {
+      console.error(`Can't find SFX cue ${id}.`);
       return;
     }
 
