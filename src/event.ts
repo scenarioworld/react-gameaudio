@@ -81,12 +81,12 @@ export class EventManager {
         variables
       );
     } else if ('select' in event) {
-      // Run all passing conditions
+      // Run first passing condition conditions
       const passingConditions = Object.keys(event.select).filter(cond =>
         evaluateAudioCondition(cond, variables)
       );
-      for (const cond of passingConditions) {
-        this.executeEvent(event.select[cond]);
+      if (passingConditions.length > 0) {
+        this.executeEvent(event.select[passingConditions[0]]);
       }
     } else if ('cycle' in event) {
       const index = (this.cycleCounters.get(event) ?? 0) % event.cycle.length;

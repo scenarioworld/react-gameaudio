@@ -32,7 +32,7 @@ export type AudioEvent =
 export type EventDefSet = Record<string, AudioEvent>;
 
 /** Variable values */
-export type Variables = Record<string, number | string>;
+export type Variables = { [name: string]: number | string | Variables };
 
 /** Root JSON object definition */
 export interface AudioJSON {

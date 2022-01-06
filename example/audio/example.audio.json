@@ -23,6 +23,7 @@
         },
         "beep": { 
             "select": {
+                "vars.a == 3": "beep4",
                 "test == 0": "beep1",
                 "test > 0": "beep2"
             }
