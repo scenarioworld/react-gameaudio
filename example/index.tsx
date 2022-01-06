@@ -19,6 +19,7 @@ const App = () => {
       <button onClick={() => playSFX("beep")}>Beep</button>
       <button onClick={() => setNum(n => n == 0 ? 5 : 0)}>Toggle Num</button>
       <button onClick={() => playSFX("beepA")}>Beep Shuffle</button>
+      <button onClick={() => playSFX("beepCycle")}>Beep Cycle</button>
       <button onClick={() => setMusicId(null)}>Stop</button>
       <GameAudioPlayer package={ExampleAudioPackage} music_id={musicId} sfx_queue={sfxQueue} clearSFXQueue={clearSFXQueue} fade_time={1} variables={{"test": num}} />
     </div>

@@ -25,6 +25,7 @@ export type AudioEvent =
   | string
   | AudioEvent[]
   | { shuffle: ShuffleEventDefinition }
+  | { cycle: ShuffleEventDefinition }
   | { select: SelectEventDefinition };
 
 /** Set of event definitions */

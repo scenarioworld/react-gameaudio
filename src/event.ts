@@ -43,6 +43,8 @@ function evaluateAudioCondition(
 }
 
 export class EventManager {
+  private readonly cycleCounters: Map<object, number> = new Map();
+
   /**
    * Creates a new event manager
    * @param definitions Event definitions
@@ -86,6 +88,10 @@ export class EventManager {
       for (const cond of passingConditions) {
         this.executeEvent(event.select[cond]);
       }
+    } else if ('cycle' in event) {
+      const index = (this.cycleCounters.get(event) ?? 0) % event.cycle.length;
+      this.executeEvent(event.cycle[index], variables);
+      this.cycleCounters.set(event, index + 1);
     }
   }
 }

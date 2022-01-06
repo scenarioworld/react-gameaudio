@@ -23,10 +23,13 @@
         },
         "beep": { 
             "select": {
-                "test == 0": "beepA",
+                "test == 0": "beep1",
                 "test > 0": "beep2"
             }
         },
-        "brook": "test"
+        "brook": "test",
+        "beepCycle": {
+            "cycle": ["beep1", "beep2", "beep3", "beep4"]
+        }
     }
 }

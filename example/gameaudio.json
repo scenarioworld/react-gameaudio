@@ -24,6 +24,10 @@
                             "type": "array",
                             "items": { "$ref": "#/definitions/event" }
                         },
+                        "cycle": { 
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/event" }
+                        },
                         "select": {
                             "type": "object",
                             "additionalProperties": {
