@@ -53,7 +53,7 @@ export class EventManager {
    * @param graph Graph to forward SFX calls to
    */
   constructor(
-    private readonly definitions: EventDefSet,
+    private readonly definitions: EventDefSet | undefined,
     private readonly graph: AudioGraph,
     private readonly random: RandomNumberFunction = Math.random
   ) {}
@@ -69,6 +69,14 @@ export class EventManager {
   }
 
   private executeEvent(event: AudioEvent, variables?: Variables) {
+    // Early out if no event defs
+    if (!this.definitions) {
+      if (typeof event === 'string') {
+        this.graph.playsfx(event);
+      }
+      return;
+    }
+
     if (typeof event === 'string') {
       // Check if it's an audio event. If so, run it
       if (event in this.definitions) {
