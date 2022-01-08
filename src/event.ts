@@ -42,6 +42,8 @@ function evaluateAudioCondition(
   return false;
 }
 
+type RandomNumberFunction = () => number;
+
 export class EventManager {
   private readonly cycleCounters: Map<object, number> = new Map();
 
@@ -50,7 +52,11 @@ export class EventManager {
    * @param definitions Event definitions
    * @param graph Graph to forward SFX calls to
    */
-  constructor(private definitions: EventDefSet, private graph: AudioGraph) {}
+  constructor(
+    private readonly definitions: EventDefSet,
+    private readonly graph: AudioGraph,
+    private readonly random: RandomNumberFunction = Math.random
+  ) {}
 
   /**
    * Execute event by name
@@ -77,16 +83,16 @@ export class EventManager {
     } else if ('shuffle' in event) {
       // Run random event
       this.executeEvent(
-        event.shuffle[Math.floor(Math.random() * event.shuffle.length)],
+        event.shuffle[Math.floor(this.random() * event.shuffle.length)],
         variables
       );
     } else if ('select' in event) {
       // Run first passing condition conditions
-      const passingConditions = Object.keys(event.select).filter(cond =>
-        evaluateAudioCondition(cond, variables)
-      );
-      if (passingConditions.length > 0) {
-        this.executeEvent(event.select[passingConditions[0]]);
+      for (const condition in event.select) {
+        if (evaluateAudioCondition(condition, variables)) {
+          this.executeEvent(event.select[condition]);
+          return;
+        }
       }
     } else if ('cycle' in event) {
       const index = (this.cycleCounters.get(event) ?? 0) % event.cycle.length;

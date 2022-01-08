@@ -15,7 +15,7 @@ export interface AudioDef {
 export type AudioDefSet = Record<string, AudioDef>;
 
 /** Definition of a shuffle event */
-export type ShuffleEventDefinition = [AudioEvent];
+export type ShuffleEventDefinition = AudioEvent[];
 
 /** Definition of a select event */
 export type SelectEventDefinition = Record<string, AudioEvent>;

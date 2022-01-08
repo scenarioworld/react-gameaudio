@@ -8,7 +8,7 @@
             "name": "Jest Current File",
             "type": "node",
             "request": "launch",
-            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/razzle",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/tsdx",
             "args": ["test", "${fileBasenameNoExtension}", "--env=jsdom", "--runInBand", "--no-cache", "--watchAll"],
             "protocol": "inspector",
             "cwd": "${workspaceFolder}",
