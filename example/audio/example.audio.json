@@ -4,5 +4,33 @@
     "music": {
         "song": { "file": "song.mp3" },
         "musicbox": { "file": "musicbox.mp3" }
+    },
+
+    "variables": {
+        "test": 0
+    },
+
+    "sfx": {
+        "beep1": { "file": "beep1.wav" },
+        "beep2": { "file": "beep2.wav" },
+        "beep3": { "file": "beep3.wav" },
+        "beep4": { "file": "beep4.wav" }
+    },
+    
+    "events": {
+        "beepA": {
+            "shuffle": ["beep1", "beep2", "beep3", "beep4"]
+        },
+        "beep": { 
+            "select": {
+                "vars.a == 3": "beep4",
+                "test == 0": "beep1",
+                "test > 0": "beep2"
+            }
+        },
+        "brook": "test",
+        "beepCycle": {
+            "cycle": ["beep1", "beep2", "beep3", "beep4"]
+        }
     }
 }

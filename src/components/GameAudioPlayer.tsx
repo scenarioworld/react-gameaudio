@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
+import { EventManager } from '../event';
 import { AudioGraph } from '../graph';
-import { AudioPackage } from '../json';
+import { AudioPackage, Variables } from '../json';
 
 interface Properties {
   /** Audio package. Required. Do not change this after mount. */
@@ -9,11 +10,14 @@ interface Properties {
   /** ID of the piece of music to play */
   music_id?: string | null;
 
-  /** List of SFX cues to play */
+  /** List of SFX cues or events to play */
   sfx_queue?: string[];
 
   /** Number of seconds to use when fading */
   fade_time?: number;
+
+  /** Variable values piped into the event system */
+  variables?: Variables;
 
   /** Callback that tells the parent that the SFX queue has been played and should be cleared */
   clearSFXQueue: () => void;
@@ -23,11 +27,16 @@ interface Properties {
  * Audio Player component. Responsible for rendering the audio from the current audio state
  */
 export function GameAudioPlayer(props: Properties): JSX.Element | null {
-  // Create our audio graph
+  // Create refs
   const audioGraphRef = useRef<AudioGraph | undefined>(undefined);
+  const eventManagerRef = useRef<EventManager | undefined>(undefined);
 
   // Cache package
   const audioPackage = useRef(props.package);
+
+  // Make sure variables are available in our useEffect callback
+  const variableAccess = useRef(props.variables);
+  variableAccess.current = props.variables;
 
   // Schedule audio graph initialization.
   // Will run exactly once after the first render
@@ -36,6 +45,12 @@ export function GameAudioPlayer(props: Properties): JSX.Element | null {
     audioGraphRef.current = new AudioGraph(
       audioPackage.current.definitions,
       audioPackage.current.resolver
+    );
+
+    // Create event manager
+    eventManagerRef.current = new EventManager(
+      audioPackage.current.definitions.events,
+      audioGraphRef.current
     );
 
     // Returning a function from useEffect schedules it to run when the component dies
@@ -63,14 +78,14 @@ export function GameAudioPlayer(props: Properties): JSX.Element | null {
   const clearSFXQueue = props.clearSFXQueue;
   useEffect(() => {
     // Make sure audio graph is valid
-    if (!audioGraphRef.current) {
+    if (!audioGraphRef.current || !eventManagerRef.current) {
       return;
     }
 
     if (queue) {
       // Play every SFX in queue
       for (const sfx of queue) {
-        audioGraphRef.current.playsfx(sfx);
+        eventManagerRef.current.execute(sfx, variableAccess.current);
       }
 
       // Clear queue

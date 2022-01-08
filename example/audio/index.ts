@@ -1,10 +1,11 @@
 import { AudioPackage } from "../../.";
 
-const allAudioFiles: Record<string, string> = require("./*.mp3");
+const mp3AudioFiles: Record<string, string> = require("./*.mp3");
+const wavAudioFiles: Record<string, string> = require("./*.wav");
 
 const ExampleAudioPackage: AudioPackage = { 
     definitions: require("./example.audio.json"),
-    resolver: (filename: string) => allAudioFiles[filename.replace(".mp3", "")]
+    resolver: (filename: string) => mp3AudioFiles[filename.replace(".mp3", "")] ?? wavAudioFiles[filename.replace(".wav", "")]
 };
 
 export default ExampleAudioPackage;
