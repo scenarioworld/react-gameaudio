@@ -46,7 +46,7 @@ describe('A Basic Audio Graph', () => {
 
   const requestMock = createConstructorMock(<XMLHttpRequest>_stub, function() {
     const me: Partial<XMLHttpRequest> & { secretURL?: string } = {};
-    me.open = jest.fn((_method, url) => (me.secretURL = url));
+    me.open = jest.fn((_method, url) => (me.secretURL = url.toString()));
     me.send = jest.fn(() => {
       setTimeout(() => {
         //@ts-ignore

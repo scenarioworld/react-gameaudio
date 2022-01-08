@@ -43,10 +43,10 @@ export interface AudioJSON {
   sfx?: AudioDefSet;
 
   /** Variables for events */
-  variables: Variables;
+  variables?: Variables;
 
   /** Events */
-  events: EventDefSet;
+  events?: EventDefSet;
 }
 
 /** Resolves an audio filename, usually by calling require(). Should return a URI that can be passed to an XMLHttpRequest */
